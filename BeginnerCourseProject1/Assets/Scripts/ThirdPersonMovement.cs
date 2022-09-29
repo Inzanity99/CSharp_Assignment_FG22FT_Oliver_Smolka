@@ -11,6 +11,8 @@ public class ThirdPersonMovement : MonoBehaviour
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
 
+    [SerializeField] private int health = 100;
+
     public float turnSmoothTime = 0.1f;
     private float turnSmoothVelocity;
 
