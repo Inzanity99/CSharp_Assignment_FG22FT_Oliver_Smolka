@@ -24,11 +24,25 @@ public class ThirdPersonMovement : MonoBehaviour
     bool isGrounded;
 
     public Animator anim;
+    public bool canMove;
+    public GameObject cinemachineBrain;
 
     // Update is called once per frame
     void Update()
     {
-        // Reset velocity if player is grounded
+        //disable cam if player isnt active
+        if (canMove == false)
+        {
+            cinemachineBrain.SetActive(false);
+        }
+        else
+        {
+            cinemachineBrain.SetActive(true);
+        }
+
+
+
+            // Reset velocity if player is grounded
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         
         if(isGrounded && velocity.y < 0)
@@ -37,12 +51,15 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         // Basic 3D Movement
+        
         float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        float vertical = Input.GetAxisRaw("Vertical"); 
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
         
+        
+        
         // Make the player face the camera and move in the camera direction
-        if (direction.magnitude >= 0.1f)
+        if (direction.magnitude >= 0.1f && canMove)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
@@ -52,7 +69,7 @@ public class ThirdPersonMovement : MonoBehaviour
             characterController.Move(moveDir.normalized * speed * Time.deltaTime);
         }
         // Jumping physics
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && isGrounded && canMove)
         {
             //Start animation
             anim.SetBool("jump", true);
