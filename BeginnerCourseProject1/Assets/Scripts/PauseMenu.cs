@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
 
     void Update()
+    // If we press P or Escape, we open the Pause Menu, or Resume the game
     {
         if (Input.GetKeyDown(KeyCode.P))
         {

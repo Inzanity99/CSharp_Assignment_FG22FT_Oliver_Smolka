@@ -11,8 +11,6 @@ public class ThirdPersonMovement : MonoBehaviour
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
 
-    [SerializeField] private int health = 100;
-
     public float turnSmoothTime = 0.1f;
     private float turnSmoothVelocity;
 
@@ -30,7 +28,7 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //disable cam if player isnt active
+        // Disable cam if player isnt active
         if (canMove == false)
         {
             cinemachineBrain.SetActive(false);

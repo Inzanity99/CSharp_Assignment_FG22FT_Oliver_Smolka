@@ -22,24 +22,24 @@ public class TurnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //increase timer
+        // Increase timer
         playTimer += Time.deltaTime;
         timerText.text = "Time left: " + (turnTime - Mathf.RoundToInt(playTimer));
 
 
         if (players[turn] != null && players[(turn + 1) % 2] != null)
         {
-            //active player
+            // Active player
             players[turn].GetComponent<ThirdPersonMovement>().canMove = true;
             
             
 
-            //inactive player
+            // Inactive player
             players[(turn + 1) % 2].GetComponent<ThirdPersonMovement>().canMove = false;
             
             
 
-            //changes turn after 10s
+            // Changes turn after 10s
             if(playTimer > turnTime)
             {
                 turn = ((turn + 1) % 2);
@@ -49,7 +49,7 @@ public class TurnManager : MonoBehaviour
        
 
 
-        //win check
+        // Win check
         if (players[0] == null)
         {
             
