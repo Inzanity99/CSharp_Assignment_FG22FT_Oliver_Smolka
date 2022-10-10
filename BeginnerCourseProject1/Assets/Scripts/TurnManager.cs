@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 
 public class TurnManager : MonoBehaviour
@@ -10,6 +12,9 @@ public class TurnManager : MonoBehaviour
     private int turn;
     public Text timerText;
     private float playTimer;
+    public TextMeshProUGUI gameOverText;
+
+    public ShurikenProjectile[] weapons;
 
     public float turnTime = 10;
 
@@ -31,12 +36,14 @@ public class TurnManager : MonoBehaviour
         {
             // Active player
             players[turn].GetComponent<ThirdPersonMovement>().canMove = true;
+            weapons[turn].enabled = true;
             
             
 
             // Inactive player
             players[(turn + 1) % 2].GetComponent<ThirdPersonMovement>().canMove = false;
-            
+            weapons[(turn + 1) % 2].enabled = false;
+            weapons[(turn + 1) % 2].hasFired = false;
             
 
             // Changes turn after 10s
@@ -53,12 +60,19 @@ public class TurnManager : MonoBehaviour
         if (players[0] == null)
         {
             
-            print("player 2 won!");
+            gameOverText.text = "Player 2 won!";
+            Invoke("LoadMenu", 2f);
         }
         else if (players[1] == null)
         {
             
-            print("player 1 won!");
+            gameOverText.text = "Player 1 won!";
+            Invoke("LoadMenu", 2f);
         }
+    }
+
+    void LoadMenu()
+    {
+        SceneManager.LoadScene("Main Menu", LoadSceneMode.Single);
     }
 }
