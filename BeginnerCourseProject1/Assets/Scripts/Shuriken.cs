@@ -14,12 +14,15 @@ public class Shuriken : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(gameObject);
-
         if(collision.gameObject.TryGetComponent<PlayerStats>(out PlayerStats playerComponent))
         {
             playerComponent.LooseHealth(20);
         }
+        if(collision.transform.tag == "removable")
+        {
+            Destroy(collision.gameObject);
+        }
+        Destroy(gameObject);
         
      }
 }
